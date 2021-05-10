@@ -1,28 +1,31 @@
-.App {
-  text-align: center;
+* {
+  box-sizing: unset;
 }
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.row {
+  margin: 0;
 }
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.auto {
+  padding: 0;
 }
-
+.left {
+  padding: 0;
+}
+.cars {
+  width: 30%;
+  border: 1px solid orange;
+}
+.content {
+  max-width: 96%;
+}
 .s{
   margin-top: 1%;
 }
-
 .s:hover {
   font-size: 20px;
 }
 
 input[type = search] {
-  width: 163px;
+  width: 170px;
   float: right;
   size: auto;
 }
@@ -31,7 +34,6 @@ input[type = search]:focus {
   width: 50%;
   margin-top: 10px;
   transition: 0.5s;
-  transform: rotate(3deg);
 }
 
 #back-to-top {
@@ -61,6 +63,7 @@ input[type = search]:focus {
 
 
 #edit {
+  width: 17px;
 	cursor: pointer;
 	position: fixed;
 	bottom: 150px;
@@ -70,6 +73,13 @@ input[type = search]:focus {
 	color: #fff;
   padding: 15px;
   opacity: 0.4;
+}
+.load {
+  width: 17px;
+	cursor: pointer;
+	position: fixed;
+	top: 330px;
+  right: 52%;
 }
 
 .App-header {

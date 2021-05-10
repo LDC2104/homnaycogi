@@ -4,6 +4,7 @@ import 'firebase';
 import $ from 'jquery';
 import reactStringReplace from 'react-string-replace';
 import ReactLoading from 'react-loading';
+import Sport from '../components/sport';
 
 
 class Home extends Component {
@@ -14,6 +15,7 @@ class Home extends Component {
             data : [],
             search : '',
             dataS : [],
+            select : '1',
         }
         $(document).ready(function(){ 
             $(window).scroll(function(){ 
@@ -105,6 +107,15 @@ class Home extends Component {
         return colors[Math.floor(Math.random() * colors.length)];
     }
 
+    renderSwitch(param) {
+        // eslint-disable-next-line default-case
+        switch(param) {
+          case '2':
+            return <Sport />;
+          
+        }
+    }
+
     render() {
         if (this.state.search !== '' && this.state.data !== null) {
             this.state.dataS = this.state.data.filter((item) => {
@@ -116,9 +127,9 @@ class Home extends Component {
         return (
             <div>
                 <div class="row">
-                    <div className="col-lg-2"></div>
-                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style={{padding: "2%", marginLeft: "1.8%"}}>
-                        <div style={{textAlign: "center", marginBottom: "2%"}}>
+                    <div className="col-2 left"></div>
+                    <div class="col-xs-4 col-sm-6 col-md-8 col-lg-8 auto">
+                        <div style={{textAlign: "center", margin: "2% 0"}}>
                             {
                                 this.state.h1.split(' ').map(text => {
                                     return <h1 style={{ color: this.getRandomColor(), display: 'inline', fontFamily: "cursive, sans-serif"}}>
@@ -127,41 +138,52 @@ class Home extends Component {
                                 })
                             }
                         </div>
+                    
+                        <div className="selection">
+                            <select className="cars" id="cars" name="select" onChange={this.onChange}>
+                                <option value="1">Học tập</option>
+                                <option value="2">Thể thao</option>
+                                <option value="3">Game</option>
+                                <option value="4">Linh tinh</option>
+                            </select>
+                        </div>
                         
                         {
                             this.state.data.length === 0
                             ? <div style={{display: 'flex', justifyContent: 'center', marginTop: "150px"}}>
                                 <ReactLoading type={"spinningBubbles"} color={"black"} height={50} width={50} />
                               </div>
-                            : <div class="input-group" style={{padding: "2%", border: "1px solid orange"}}>
-                                    <div style={{width: '100%', position: 'relative', paddingBottom: '20px'}}>
-                                        <input className="search col-auto form-control" type="search" name="search" id="input" value={this.state.search} required="required" title="Bạn muốn kiếm gì" placeholder="Bạn muốn kiếm gì..." onChange={this.onChange} />
-                                        {/* <i class="fas fa-search iconS"  style={{position: 'absolute', right: '0', padding: '13px'}}></i> */}
-                                    </div>
-                                    {
-                                        this.state.dataS.length !== 0 && this.state.data !== null
-                                        ? 
-                                            this.state.dataS.map((ds, index) => {
-                                                return  <div style={{wordWrap: "break-word", width: "100%"}}>
-                                                            <h3 style={{fontFamily: "cursive, sans-serif"}}>{ds.tieude}</h3>
-                                                            <p style={{fontFamily: "cursive, sans-serif", textIndent: '5%'}}>{ds.noidung.split('\n').map(str => {
-                                                                return (
-                                                                    str.indexOf('https://i.ibb.co') !== -1
-                                                                    ?   reactStringReplace(str, /(https?:\/\/i.ibb.co\S+)/g, (match, i) => (
-                                                                            <img src={`${str}`} style={{width: '40%', height: '20%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}} alt="" />
+                            : this.state.select === '1' 
+                                ? <div class="input-group content" style={{padding: "2%", border: "1px solid orange", width: "unset"}}>
+                                        <div style={{width: '100%', position: 'relative', paddingBottom: '20px'}}>
+                                            <input className="search col-auto form-control" type="search" name="search" id="input" value={this.state.search} required="required" title="Bạn muốn kiếm gì" placeholder="Bạn muốn kiếm gì..." onChange={this.onChange} />
+                                            {/* <i class="fas fa-search iconS"  style={{position: 'absolute', right: '0', padding: '13px'}}></i> */}
+                                        </div>
+                                        {
+                                            this.state.dataS.length !== 0 && this.state.data !== null
+                                            ? 
+                                                this.state.dataS.map((ds, index) => {
+                                                    return  <div style={{wordWrap: "break-word", width: "100%"}}>
+                                                                <h3 style={{fontFamily: "cursive, sans-serif"}}>{ds.tieude}</h3>
+                                                                <p style={{fontFamily: "cursive, sans-serif", textIndent: '5%'}}>{ds.noidung.split('\n').map(str => {
+                                                                    return (
+                                                                        str.indexOf('https://i.ibb.co') !== -1
+                                                                        ?   reactStringReplace(str, /(https?:\/\/i.ibb.co\S+)/g, (match, i) => (
+                                                                                <img src={`${str}`} style={{width: '40%', height: '20%', display: 'block', marginLeft: 'auto', marginRight: 'auto'}} alt="" />
+                                                                            ))
+                                                                        :   str.indexOf('https') !== -1
+                                                                        ? reactStringReplace(str, /(https?:\/\/\S+)/g, (match, i) => (
+                                                                            <a style={{wordWrap: "break-word"}} key={match + i} href={match}>{match}</a>
                                                                         ))
-                                                                    :   str.indexOf('https') !== -1
-                                                                    ? reactStringReplace(str, /(https?:\/\/\S+)/g, (match, i) => (
-                                                                        <a style={{wordWrap: "break-word"}} key={match + i} href={match}>{match}</a>
-                                                                    ))
-                                                                    : <p style={{wordWrap: "break-word"}}>{str}</p>
-                                                                )
-                                                            })}</p>
-                                                        </div>
-                                            })
-                                        :   ''
-                                    }                            
-                                </div>
+                                                                        : <p style={{wordWrap: "break-word"}}>{str}</p>
+                                                                    )
+                                                                })}</p>
+                                                            </div>
+                                                })
+                                            :   ''
+                                        }                            
+                                    </div>
+                                : this.renderSwitch(this.state.select)
                         }
                         <span id="edit" onClick={this.onClickE}>
                             <i class="far fa-edit"></i>
@@ -180,8 +202,6 @@ class Home extends Component {
             </div>
         )
     }
-
 }
-
 
 export default Home;

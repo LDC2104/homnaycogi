@@ -107,9 +107,9 @@ class Edit extends Component {
         return (
             <div>
                 <div class="row">
-                    <div className="col-lg-2"></div>
-                    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" style={{padding: "2%", marginLeft: "1.8%"}}>
-                        <div style={{textAlign: "center", marginBottom: "2%"}}>
+                    <div className="col-2 left"></div>
+                    <div class="col-xs-4 col-sm-6 col-md-8 col-lg-8 auto">
+                        <div style={{textAlign: "center", margin: "2% 0"}}>
                             {
                                 this.state.h1.split(' ').map(text => {
                                     return <h1 style={{ color: this.getRandomColor(), display: 'inline', fontFamily: "cursive, sans-serif"}}>
@@ -164,7 +164,7 @@ class Edit extends Component {
                             </div>
                             }
 
-                        <span id="edit" style={{width: "44px", height: "54px"}}  onClick={this.onClickB}>
+                        <span id="edit" onClick={this.onClickB}>
                             <i class="fas fa-chevron-left"></i>
                         </span>
                         <span id="back-to-tops" onClick={this.onClick}>
